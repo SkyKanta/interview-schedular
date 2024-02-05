@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "Monday",
+    "spots": 3
+  },
+  {
+    "id": 2,
+    "name": "Tuesday",
+    "spots": 3
+  },
+  {
+    "id": 3,
+    "name": "Wednesday",
+    "spots": 2
+  },
+  {
+    "id": 4,
+    "name": "Thursday",
+    "spots": 3
+  },
+  {
+    "id": 5,
+    "name": "Friday",
+    "spots": 4
+  }
+]
