@@ -1,11 +1,11 @@
-import React from "react";
-import Confirm from "./Confirm";
-import Empty from "./Empty";
-import Form from "./Form";
-import Header from "./Header";
-import Show from "./Show";
+import React from 'react';
+import Confirm from './Confirm';
+import Empty from './Empty';
+import Form from './Form';
+import Header from './Header';
+import Show from './Show';
 
-import "./styles.scss";
+import './styles.scss';
 
 const Appointment = (props) => {
   const [add, setAdd] = React.useState(false);
@@ -14,7 +14,7 @@ const Appointment = (props) => {
   function save(name, interviewer) {
     const interview = {
       student: name,
-      interviewer
+      interviewer,
     };
     setAdd(false);
     setEdit(false);
@@ -26,8 +26,9 @@ const Appointment = (props) => {
       <Header time={props.time} />
       {props.interview ? (
         isDeleting ? (
+          // delete confirm component
           <Confirm
-            message={"Are you sure you want to delete?"}
+            message={'Are you sure you want to delete?'}
             onCancel={() => setIsDeleting(false)}
             onConfirm={() => {
               props.cancelInterview(props.id);
