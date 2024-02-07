@@ -9,3 +9,43 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Day {
+  id           Int                    @id @default(autoincrement())
+  name         String                 @db.VarChar(20)
+  appointments Appointment[]
+  interviewers AvailableInterviewer[]
+}
+
+model Appointment {
+  id        Int        @id @default(autoincrement())
+  time      String
+  day       Day        @relation(fields: [dayId], references: [id])
+  dayId     Int        @map("day_id")
+  interview Interview?
+}
+
+model Interview {
+  id            Int         @id @default(autoincrement())
+  student       String      @db.VarChar(255)
+  interviewer   Interviewer @relation(fields: [interviewerId], references: [id])
+  interviewerId Int         @map("interviewer_id")
+  appointment   Appointment @relation(fields: [appointmentId], references: [id])
+  appointmentId Int         @unique @map("appointment_id")
+}
+
+model Interviewer {
+  id            Int                    @id @default(autoincrement())
+  name          String                 @db.VarChar(255)
+  avatar        String
+  interviews    Interview[]
+  availableDays AvailableInterviewer[]
+}
+
+model AvailableInterviewer {
+  id            Int         @id @default(autoincrement())
+  interviewer   Interviewer @relation(fields: [interviewerId], references: [id])
+  interviewerId Int         @map("interviewer_id")
+  day           Day         @relation(fields: [dayId], references: [id])
+  dayId         Int         @map("day_id")
+}
