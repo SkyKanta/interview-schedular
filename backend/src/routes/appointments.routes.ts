@@ -1,19 +1,14 @@
 import { Router } from 'express';
 import controller from '../controllers/appointments.controller';
-const router = Router();
+export const appointmentsRouter = Router();
 
-router.get('/appointments', controller.getAppointments);
-router.post(
-  '/appointments/:appointmentId/interview',
+appointmentsRouter.get('/', controller.getAppointments);
+appointmentsRouter.post(
+  '/:appointmentId/interview',
   controller.createInterview
 );
-router.put(
-  '/appointments/:appointmentId/interview',
-  controller.updateInterview
-);
-router.delete(
-  '/appointments/:appointmentId/interview',
+appointmentsRouter.put('/:appointmentId/interview', controller.updateInterview);
+appointmentsRouter.delete(
+  '/:appointmentId/interview',
   controller.deleteInterview
 );
-
-export default router;

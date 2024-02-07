@@ -2,7 +2,7 @@
 
 ## Appointments
 
-### **GET /appointments/?dayId**
+### **GET /appointments?dayId**
 
 #### Description
 
@@ -72,7 +72,7 @@ Fetch a list of all days (probably static if only weekdays are considered).
 
 ## Interviewers
 
-### **GET /appointments/?dayId**
+### **GET /interviewers/?dayId**
 
 #### Description
 

@@ -1,7 +1,5 @@
 import { Router } from 'express';
 import controller from '../controllers/days.controller';
-const router = Router();
+export const daysRouter = Router();
 
-router.get('/days', controller.getDays);
-
-export default router;
+daysRouter.get('/', controller.getDays);
