@@ -9,7 +9,7 @@
     "test": "jest --coverage --passWithNoTests",
     "build": "tsc",
     "start": "npm run build && NODE_ENV=production node build",
-    "seed": "ts-node prisma/seed.ts"
+    "seed:days": "ts-node prisma/seeds/days.seed.ts"
   },
   "keywords": [],
   "author": "",
