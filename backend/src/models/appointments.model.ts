@@ -1,6 +1,5 @@
 import { Appointment } from '@prisma/client';
 import { prisma } from '../../prisma';
-import exp from 'constants';
 
 /**
  * Get all appointments of specific days
@@ -10,11 +9,7 @@ import exp from 'constants';
 const findManyWithDayId = async (dayIds: number[]): Promise<Appointment[]> => {
   return await prisma.appointment.findMany({
     where: {
-      day: {
-        id: {
-          in: dayIds,
-        },
-      },
+      dayId: { in: dayIds },
     },
   });
 };

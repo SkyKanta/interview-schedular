@@ -2,7 +2,7 @@
 
 ## Appointments
 
-### **GET /appointments?dayId**
+### **GET /appointments?dayIds**
 
 #### Description
 
@@ -10,7 +10,7 @@ Get appointments for specific days.
 
 #### Params
 
-- query : dayId(integer)
+- query : dayIds(integer)
 
 #### Response
 

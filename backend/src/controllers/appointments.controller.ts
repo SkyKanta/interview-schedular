@@ -9,16 +9,20 @@ import { Appointment } from '@prisma/client';
  * @param res
  * @returns {void}
  */
-const getAppointmentsWithDayId = (req: Request, res: Response): void => {
+const getAppointmentsWithDayId = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     // get all of the dayIds from the query string
-    const dayIds = req.query.dayIds as string;
-    console.log('dayIds', dayIds);
+    const dayIds = typeof req.query.dayIds === 'string' ? req.query.dayIds : '';
 
     //parse the dayIds into an array of numbers
     const dayIdsArray = dayIds.split(',').map(Number);
+
     // pass the dayIdsArray to db and get the list of appointments
-    const appointmentsWithDayId = appointments.findManyWithDayId(dayIdsArray);
+    const appointmentsWithDayId =
+      await appointments.findManyWithDayId(dayIdsArray);
     // send the response
     res.status(200).json({ appointments: appointmentsWithDayId });
   } catch (err) {
