@@ -11,7 +11,9 @@ Get appointments. You can get ones for specific date by adding `dayIds` query.
 #### Response
 
 ```ts
-{appointments : Appointments[]}
+{
+  appointments : Appointments[]
+}
 ```
 
 ## Interviews
@@ -25,9 +27,10 @@ Create a new interview and add it to the appointment with a specific id.
 #### Request body
 
 ```ts
-{   appointmentId : string,
-    interviewerId : string,
-    student : string
+{
+  appointmentId : number,
+  interviewerId : number,
+  student : string
 }
 ```
 
@@ -104,7 +107,9 @@ Fetch a list of all days (probably static if only weekdays are considered).
 #### Response
 
 ```ts
-{days : Days[]}
+{
+  days : Days[]
+}
 ```
 
 ## Interviewers
@@ -118,5 +123,7 @@ Get interviewers. You can get ones for specific date by adding `dayIds` query.
 #### Response
 
 ```ts
-{interviewers : Interviewers[]}
+{
+  interviewers : Interviewers[]
+}
 ```
