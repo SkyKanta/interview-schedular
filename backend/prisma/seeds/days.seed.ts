@@ -1,26 +1,26 @@
 import { dbConnect, dbDisconnect, prisma } from '../';
 
-// Seed the day database
+// Seed the day database. All spots are initially set to 5, empty
 const data = [
   {
     name: 'Monday',
-    spots: 3,
+    spots: 5,
   },
   {
     name: 'Tuesday',
-    spots: 3,
+    spots: 5,
   },
   {
     name: 'Wednesday',
-    spots: 2,
+    spots: 5,
   },
   {
     name: 'Thursday',
-    spots: 3,
+    spots: 5,
   },
   {
     name: 'Friday',
-    spots: 4,
+    spots: 5,
   },
 ];
 

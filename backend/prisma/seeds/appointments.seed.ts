@@ -1,8 +1,7 @@
 import { Appointment } from '@prisma/client';
 import { dbConnect, dbDisconnect, prisma } from '../';
-import { time } from 'console';
 
-const data: Partial<Appointment>[] = [
+const data: Pick<Appointment, 'time'>[] = [
   { time: '12pm' },
   { time: '1pm' },
   { time: '2pm' },
@@ -12,15 +11,14 @@ const data: Partial<Appointment>[] = [
 const main = async () => {
   try {
     await dbConnect();
-    for (let i = 1; i < data.length; i++) {
-      await prisma.appointment.create({
-        data: {
-          time: data[i].time!,
-          dayId: i,
-        },
-      });
+    const days = await prisma.day.findMany();
+    for (let day of days) {
+      for (let appointment of data) {
+        await prisma.appointment.create({
+          data: { ...appointment, dayId: day.id },
+        });
+      }
     }
-
     console.log('seeded successfully');
   } catch (error) {
     console.error(error);
