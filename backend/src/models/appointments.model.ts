@@ -11,6 +11,9 @@ const findManyWithDayId = async (dayIds: number[]): Promise<Appointment[]> => {
     where: {
       dayId: { in: dayIds },
     },
+    include: {
+      interview: true,
+    },
   });
 };
 
