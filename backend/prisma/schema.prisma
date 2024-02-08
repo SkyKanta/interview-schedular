@@ -16,6 +16,10 @@ model Day {
   spots       Int
   appointments Appointment[]
   interviewers AvailableInterviewer[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  @@map("days")
 }
 
 model Appointment {
@@ -24,6 +28,9 @@ model Appointment {
   day       Day        @relation(fields: [dayId], references: [id])
   dayId     Int        @map("day_id")
   interview Interview?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  @@map("appointments")
 }
 
 model Interview {
@@ -33,6 +40,9 @@ model Interview {
   interviewerId Int         @map("interviewer_id")
   appointment   Appointment @relation(fields: [appointmentId], references: [id])
   appointmentId Int         @unique @map("appointment_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  @@map("interviews")
 }
 
 model Interviewer {
@@ -41,12 +51,16 @@ model Interviewer {
   avatar        String
   interviews    Interview[]
   availableDays AvailableInterviewer[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  @@map("interviewers")
 }
 
 model AvailableInterviewer {
-  id            Int         @id @default(autoincrement())
   interviewer   Interviewer @relation(fields: [interviewerId], references: [id])
   interviewerId Int         @map("interviewer_id")
   day           Day         @relation(fields: [dayId], references: [id])
   dayId         Int         @map("day_id")
+  @@id([interviewerId, dayId])
+  @@map("available_interviewers")
 }
