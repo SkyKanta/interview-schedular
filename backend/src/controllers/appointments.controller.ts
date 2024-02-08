@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 
 import appointments from '../models/appointments.model';
-import { Appointment } from '@prisma/client';
-
+import interviews from '../models/interviews.model';
 /**
  *
  * @param req
@@ -29,22 +28,6 @@ const getAppointmentsWithDayId = async (
     if (err instanceof Error) res.status(500).json({ message: err.message });
   }
 };
-
-const createInterview = (req: Request, res: Response): void => {
-  // Implement  logic to create an interview
-};
-
-const updateInterview = (req: Request, res: Response): void => {
-  // Implement  logic to update an interview
-};
-
-const deleteInterview = (req: Request, res: Response): void => {
-  // Implement  logic to delete an interview
-};
-
 export default {
   getAppointmentsWithDayId,
-  createInterview,
-  updateInterview,
-  deleteInterview,
 };
