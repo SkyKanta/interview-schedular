@@ -2,35 +2,47 @@
 
 ## Appointments
 
-### **GET /appointments?dayId**
+### **GET /appointments?dayIds**
 
 #### Description
 
-Get appointments for specific days.
-
-#### Params
-
-- query : dayId(integer)
+Get appointments. You can get ones for specific date by adding `dayIds` query.
 
 #### Response
 
-- {appointments : Appointments[]} (list of appointments)
+```ts
+{
+  appointments : Appointments[]
+}
+```
 
-### **POST /appointments/{appointmentId}/interview**
+## Interviews
+
+### **POST /**
 
 #### Description
 
 Create a new interview and add it to the appointment with a specific id.
 
-#### Params
+#### Request body
 
-- path : appointmentId(integer)
+```ts
+{
+  appointmentId : number,
+  interviewerId : number,
+  student : string
+}
+```
 
 #### Response
 
-- {interview : Interview} (details of the created interview)
+```ts
+{
+  interview: Interview;
+}
+```
 
-### **PUT /appointments/{appointmentId}/interview**
+### **PUT /:id**
 
 #### Description
 
@@ -38,13 +50,29 @@ Update an interview.
 
 #### Params
 
-- path : appointmentId(integer)
+##### Path
+
+```ts
+{
+  id: string;
+}
+```
+
+#### Request Body
+
+```ts
+Partial < Interview > {};
+```
 
 #### Response
 
-- {interview : Interview} (details of the updated interview)
+```ts
+{
+  interview: Interview;
+}
+```
 
-### **DELETE /appointments/{appointmentId}/interview**
+### **DELETE /:id**
 
 #### Description
 
@@ -52,11 +80,21 @@ Delete an interview.
 
 #### Params
 
-- path : appointmentId(integer)
+##### path
+
+```ts
+{
+  id: string;
+}
+```
 
 #### Response
 
-- {message : string} (confirmation message)
+```ts
+{
+  message: string;
+}
+```
 
 ## Days
 
@@ -68,20 +106,24 @@ Fetch a list of all days (probably static if only weekdays are considered).
 
 #### Response
 
-- {days : Days[]} (list of days)
+```ts
+{
+  days : Days[]
+}
+```
 
 ## Interviewers
 
-### **GET /interviewers/?dayId**
+### **GET /interviewers/**
 
 #### Description
 
-Get interviewers for specific days.
-
-#### Params
-
-- query : dayId(integer)
+Get interviewers. You can get ones for specific date by adding `dayIds` query.
 
 #### Response
 
-- {interviewers : Interviewers[]} (list of interviewers for a specific day)
+```ts
+{
+  interviewers : Interviewers[]
+}
+```
