@@ -9,7 +9,15 @@
     "test": "jest --coverage --passWithNoTests",
     "build": "tsc",
     "start": "npm run build && NODE_ENV=production node build",
-    "seed:days": "ts-node prisma/seeds/days.seed.ts"
+    "migrate:dev": "npx prisma migrate dev",
+    "seed:days": "ts-node prisma/seeds/days.seed.ts",
+    "seed:appointments": "ts-node prisma/seeds/appointments.seed.ts",
+    "seed:interviewers": "ts-node prisma/seeds/interviewers.seed.ts",
+    "seed:availableInterviewers": "ts-node prisma/seeds/availableInterviewers.seed.ts",
+    "seed:all": "npm run seed:days && npm run seed:appointments && npm run seed:interviewers && npm run seed:availableInterviewers"
+  },
+  "prisma": {
+    "seed": "ts-node "
   },
   "keywords": [],
   "author": "",
