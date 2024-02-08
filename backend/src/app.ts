@@ -6,12 +6,14 @@ import cors from 'cors';
 import { appointmentsRouter } from './routes/appointments.routes';
 import { daysRouter } from './routes/days.routes';
 import { interviewersRouter } from './routes/interviewers.routes';
+import { interviewsRouter } from './routes/interviews.routes';
 
 //  middleware
 import { errorHandler } from './middleware/errorHandler.middleware';
 
 // lib
 import { corsOptions } from './lib/cors';
+
 // dotenv
 dotenv.config();
 
@@ -25,10 +27,13 @@ app.use(cors(corsOptions));
 // appointments
 app.use('/appointments', appointmentsRouter);
 
+// interviews
+app.use('/interviews', interviewsRouter);
+
 // days
 app.use('/days', daysRouter);
 
-// index
+// interviewers
 app.use('/interviewers', interviewersRouter);
 
 app.use(errorHandler);
