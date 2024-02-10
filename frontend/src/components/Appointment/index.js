@@ -19,6 +19,7 @@ const Appointment = (props) => {
     };
     const newInterview = await props.handleCreateInterview(props.id, interview);
     setInterviewState(newInterview);
+    props.handleSpotMinus(props.dayId);
     setAdd(false);
   }
 
@@ -39,6 +40,7 @@ const Appointment = (props) => {
   const saveDelete = async (id) => {
     await props.handleDeleteInterview(id);
     setInterviewState(null);
+    props.handleSpotPlus(props.dayId);
     setIsDeleting(false);
   };
 

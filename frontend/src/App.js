@@ -73,6 +73,26 @@ export default function Application() {
     await deleteInterview(id);
   };
 
+  const handleSpotPlus = (id) => {
+    const newDays = days.map((day) => {
+      if (day.id === id) {
+        return { ...day, spots: day.spots + 1 };
+      }
+      return day;
+    });
+    setDays(newDays);
+  };
+
+  const handleSpotMinus = (id) => {
+    const newDays = days.map((day) => {
+      if (day.id === id) {
+        return { ...day, spots: day.spots - 1 };
+      }
+      return day;
+    });
+    setDays(newDays);
+  };
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -102,6 +122,8 @@ export default function Application() {
               handleCreateInterview={handleCreateInterview}
               handleUpdateInterview={handleUpdateInterview}
               handleDeleteInterview={handleDeleteInterview}
+              handleSpotPlus={handleSpotPlus}
+              handleSpotMinus={handleSpotMinus}
             />
           ))}
         <Appointment key="last" time="5pm" />
