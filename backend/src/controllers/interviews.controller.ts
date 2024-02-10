@@ -1,3 +1,4 @@
+import { Interviewer } from '@prisma/client';
 import { Request, Response } from 'express';
 import interviews from '../models/interviews.model';
 import { CreateInterviewDto, UpdateInterviewDto } from '../dtos';
@@ -14,8 +15,12 @@ const createInterview = async (req: Request, res: Response) => {
 
 const updateInterview = async (req: Request, res: Response) => {
   try {
+    console.log(req.body);
+
     const id = Number(req.params.id);
-    const attr = req.body;
+    const student = req.body.student;
+    const interviewerId = Number(req.body.interviewer.id);
+    const attr = { student, interviewerId };
     const updateInterviewDto: UpdateInterviewDto = { id, attr };
     const interview = await interviews.updateInterview(updateInterviewDto);
     res.status(200).json({ interview });

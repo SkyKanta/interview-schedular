@@ -1,19 +1,22 @@
-import React from "react";
-import InterviewerList from "../InterviewerList";
-import Button from "../Button";
+import React from 'react';
+import InterviewerList from '../InterviewerList';
+import Button from '../Button';
 
 const Form = (props) => {
-  const [name, setName] = React.useState(props.student || "");
+  const [name, setName] = React.useState(props.student || '');
   const [interviewer, setInterviewer] = React.useState(
     props.interviewer || null
   );
   const reset = () => {
-    setName("");
+    setName('');
     setInterviewer(null);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!name || !interviewer) return;
+    if (!name || !interviewer) {
+      alert('Please enter a name and select an interviewer');
+      return;
+    }
     props.onSave(name, interviewer);
   };
   const cancel = () => {

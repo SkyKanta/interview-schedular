@@ -19,6 +19,8 @@ const allowedMethods = [
 // Cors options to pass cors middleware
 export const corsOptions: cors.CorsOptions = {
   origin: (origin, callback) => {
+    console.log('origin', origin);
+
     if (!origin) {
       callback(null, true);
     } else {

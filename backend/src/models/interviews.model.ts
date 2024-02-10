@@ -8,8 +8,10 @@ import { CreateInterviewDto, UpdateInterviewDto } from '../dtos';
  * @returns {Promise<Interview>}
  */
 const createInterview = async (dto: CreateInterviewDto) => {
+  const { appointmentId, interviewerId, student } = dto;
   return await prisma.interview.create({
-    data: { ...dto },
+    data: { appointmentId, interviewerId, student },
+    include: { appointment: true, interviewer: true },
   });
 };
 /**
@@ -21,6 +23,7 @@ const updateInterview = async (dto: UpdateInterviewDto) => {
   return await prisma.interview.update({
     where: { id: dto.id },
     data: { ...dto.attr },
+    include: { appointment: true, interviewer: true },
   });
 };
 

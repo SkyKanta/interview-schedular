@@ -12,7 +12,11 @@ const findManyWithDayId = async (dayIds: number[]): Promise<Appointment[]> => {
       dayId: { in: dayIds },
     },
     include: {
-      interview: true,
+      interview: {
+        include: {
+          interviewer: true,
+        },
+      },
     },
   });
 };
