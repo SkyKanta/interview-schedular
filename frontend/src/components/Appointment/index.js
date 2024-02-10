@@ -18,7 +18,6 @@ const Appointment = (props) => {
       interviewer,
     };
     const newInterview = await props.handleCreateInterview(props.id, interview);
-    console.log('newInterview:', newInterview);
     setInterviewState(newInterview);
     setAdd(false);
   }

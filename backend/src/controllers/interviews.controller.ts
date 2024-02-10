@@ -15,8 +15,6 @@ const createInterview = async (req: Request, res: Response) => {
 
 const updateInterview = async (req: Request, res: Response) => {
   try {
-    console.log(req.body);
-
     const id = Number(req.params.id);
     const student = req.body.student;
     const interviewerId = Number(req.body.interviewer.id);

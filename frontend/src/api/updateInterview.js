@@ -1,8 +1,6 @@
 import { baseUrl } from './config';
 
 export const updateInterview = async ({ interviewId, interview }) => {
-  console.log('interviewId:', interviewId);
-  console.log('interview:', interview);
   const response = await fetch(`${baseUrl}/interviews/${interviewId}`, {
     method: 'PUT',
     headers: {
@@ -10,6 +8,5 @@ export const updateInterview = async ({ interviewId, interview }) => {
     },
     body: JSON.stringify({ ...interview }),
   });
-  console.log(response);
   return await response.json();
 };

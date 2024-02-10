@@ -30,7 +30,6 @@ export default function Application() {
       setAppointments(fetchedAppointments);
       setDays(fetchedDays.days);
       setDayId(topDay.id);
-      console.log('fetchedDays:', fetchedDays);
     };
     handleAPIFetch();
   }, []);
@@ -61,7 +60,6 @@ export default function Application() {
   };
 
   const handleUpdateInterview = async (interviewId, interview) => {
-    console.log('interviewId:', interviewId);
     const { interview: updatedInterview } = await updateInterview({
       interviewId,
       interview,
