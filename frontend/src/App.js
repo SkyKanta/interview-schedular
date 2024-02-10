@@ -6,6 +6,7 @@ import Appointment from './components/Appointment';
 import DayList from './components/DayList';
 import {
   createInterview,
+  deleteInterview,
   getAppointmentsWithDayId,
   getDays,
   getInterviewersWithDayId,
@@ -68,8 +69,8 @@ export default function Application() {
     return updatedInterview;
   };
 
-  const cancelInterview = (id) => {
-    // TODO: cancel interview
+  const handleDeleteInterview = async (id) => {
+    await deleteInterview(id);
   };
 
   return (
@@ -100,7 +101,7 @@ export default function Application() {
               {...appointment}
               handleCreateInterview={handleCreateInterview}
               handleUpdateInterview={handleUpdateInterview}
-              cancelInterview={cancelInterview}
+              handleDeleteInterview={handleDeleteInterview}
             />
           ))}
         <Appointment key="last" time="5pm" />

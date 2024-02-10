@@ -36,6 +36,12 @@ const Appointment = (props) => {
     setEdit(false);
   };
 
+  const saveDelete = async (id) => {
+    await props.handleDeleteInterview(id);
+    setInterviewState(null);
+    setIsDeleting(false);
+  };
+
   const interviewers = props.interviewers;
   const interviewer = interviewState?.interviewer;
 
@@ -49,8 +55,7 @@ const Appointment = (props) => {
             message={'Are you sure you want to delete?'}
             onCancel={() => setIsDeleting(false)}
             onConfirm={() => {
-              props.cancelInterview(interviewState.id);
-              setIsDeleting(false);
+              saveDelete(interviewState.id);
             }}
           />
         ) : edit ? (
