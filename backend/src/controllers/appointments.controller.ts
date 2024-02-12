@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import appointments from '../models/appointments.model';
-import interviews from '../models/interviews.model';
+
 /**
  *
  * @param req
@@ -22,6 +22,7 @@ const getAppointmentsWithDayId = async (
     // pass the dayIdsArray to db and get the list of appointments
     const appointmentsWithDayId =
       await appointments.findManyWithDayId(dayIdsArray);
+
     // send the response
     res.status(200).json({ appointments: appointmentsWithDayId });
   } catch (err) {

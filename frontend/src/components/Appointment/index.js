@@ -11,51 +11,76 @@ const Appointment = (props) => {
   const [add, setAdd] = React.useState(false);
   const [edit, setEdit] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
-  function save(name, interviewer) {
+  const [interviewState, setInterviewState] = React.useState(props.interview);
+  async function saveCreate(name, interviewer) {
     const interview = {
       student: name,
       interviewer,
     };
+    const newInterview = await props.handleCreateInterview(props.id, interview);
+    setInterviewState(newInterview);
+    props.handleSpotMinus(props.dayId);
     setAdd(false);
-    setEdit(false);
-    props.bookInterview(interview);
   }
+
+  const saveUpdate = async (name, interviewer) => {
+    const interview = {
+      student: name,
+      interviewer,
+    };
+    const updatedInterview = await props.handleUpdateInterview(
+      interviewState.id,
+      interview
+    );
+
+    setInterviewState(updatedInterview);
+    setEdit(false);
+  };
+
+  const saveDelete = async (id) => {
+    await props.handleDeleteInterview(id);
+    setInterviewState(null);
+    props.handleSpotPlus(props.dayId);
+    setIsDeleting(false);
+  };
+
+  const interviewers = props.interviewers;
+  const interviewer = interviewState?.interviewer;
 
   return (
     <article className="appointment">
       <Header time={props.time} />
-      {props.interview ? (
+      {interviewState ? (
         isDeleting ? (
           // delete confirm component
           <Confirm
             message={'Are you sure you want to delete?'}
             onCancel={() => setIsDeleting(false)}
             onConfirm={() => {
-              props.cancelInterview(props.id);
-              setIsDeleting(false);
+              saveDelete(interviewState.id);
             }}
           />
         ) : edit ? (
           <Form
-            student={props.interview.student}
-            interviewer={props.interview.interviewer}
-            interviewers={props.interviewers}
-            onSave={save}
+            student={interviewState.student}
+            interviewer={interviewer}
+            interviewers={interviewers}
+            onSave={saveUpdate}
             onCancel={() => setEdit(false)}
           />
         ) : (
           <Show
-            student={props.interview.student}
-            interviewer={props.interview.interviewer}
-            interviewers={props.interviewers}
+            student={interviewState.student}
+            interviewer={interviewer}
+            interviewers={interviewers}
             onEdit={() => setEdit(true)}
             onDelete={() => setIsDeleting(true)}
           />
         )
       ) : add ? (
         <Form
-          interviewers={props.interviewers}
-          onSave={save}
+          interviewers={interviewers}
+          onSave={saveCreate}
           onCancel={() => setAdd(false)}
         />
       ) : (

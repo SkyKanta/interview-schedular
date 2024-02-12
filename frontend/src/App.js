@@ -1,34 +1,96 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import "./App.scss";
+import './App.scss';
 
-import mockAppointmentsData from "./__mocks__/appointments.json";
-import mockDaysData from "./__mocks__/days.json";
-import mockInterviewersData from "./__mocks__/interviewers.json";
-import Appointment from "./components/Appointment";
-import DayList from "./components/DayList";
+import Appointment from './components/Appointment';
+import DayList from './components/DayList';
+import {
+  createInterview,
+  deleteInterview,
+  getAppointmentsWithDayId,
+  getDays,
+  getInterviewersWithDayId,
+  updateInterview,
+} from './api';
 
 export default function Application() {
-  const [day, setDay] = useState("Monday");
-  const [days, setDays] = useState(mockDaysData);
-  const [appointments, setAppointments] = useState(mockAppointmentsData);
-  const [availableInterviewers, setAvailableInterviewers] =
-    useState(mockInterviewersData);
+  const [dayId, setDayId] = useState(0);
+  const [days, setDays] = useState();
+  const [appointments, setAppointments] = useState();
+  const [availableInterviewers, setAvailableInterviewers] = useState();
 
   useEffect(() => {
-    // TODO: get data and set/update state
-  }, [day]);
+    const handleAPIFetch = async () => {
+      const fetchedDays = await getDays();
+      const topDay = fetchedDays.days[0];
+      const { appointments: fetchedAppointments } =
+        await getAppointmentsWithDayId(topDay.id);
+      const { interviewers: fetchedInterviewers } =
+        await getInterviewersWithDayId(topDay.id);
+      setAvailableInterviewers(fetchedInterviewers);
+      setAppointments(fetchedAppointments);
+      setDays(fetchedDays.days);
+      setDayId(topDay.id);
+    };
+    handleAPIFetch();
+  }, []);
+
+  const handleAPIFetchOnDayChange = async (newDayId) => {
+    const { appointments: fetchedAppointments } =
+      await getAppointmentsWithDayId(newDayId);
+    const { interviewers: fetchedInterviewers } =
+      await getInterviewersWithDayId(newDayId);
+    setAvailableInterviewers(fetchedInterviewers);
+    setAppointments(fetchedAppointments);
+    setDayId(newDayId);
+  };
 
   useEffect(() => {
     // TODO: add web socket related codes
   }, []);
 
-  const bookInterview = (id, interview) => {
-    // TODO: book or update an interview
+  const handleCreateInterview = async (appointmentId, interview) => {
+    const { student, interviewer } = interview;
+    const interviewerId = interviewer.id;
+    const { interview: newInterview } = await createInterview({
+      appointmentId,
+      interviewerId,
+      student,
+    });
+    return newInterview;
   };
 
-  const cancelInterview = (id) => {
-    // TODO: cancel interview
+  const handleUpdateInterview = async (interviewId, interview) => {
+    const { interview: updatedInterview } = await updateInterview({
+      interviewId,
+      interview,
+    });
+
+    return updatedInterview;
+  };
+
+  const handleDeleteInterview = async (id) => {
+    await deleteInterview(id);
+  };
+
+  const handleSpotPlus = (id) => {
+    const newDays = days.map((day) => {
+      if (day.id === id) {
+        return { ...day, spots: day.spots + 1 };
+      }
+      return day;
+    });
+    setDays(newDays);
+  };
+
+  const handleSpotMinus = (id) => {
+    const newDays = days.map((day) => {
+      if (day.id === id) {
+        return { ...day, spots: day.spots - 1 };
+      }
+      return day;
+    });
+    setDays(newDays);
   };
 
   return (
@@ -41,21 +103,29 @@ export default function Application() {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={days} value={day} onChange={setDay} />
+          {days && (
+            <DayList
+              days={days}
+              value={dayId}
+              onChange={handleAPIFetchOnDayChange}
+            />
+          )}
         </nav>
       </section>
       <section className="schedule">
-        {appointments.map((appointment) => (
-          <Appointment
-            key={appointment.id}
-            interviewers={availableInterviewers}
-            {...appointment}
-            bookInterview={(interview) =>
-              bookInterview(appointment.id, interview)
-            }
-            cancelInterview={cancelInterview}
-          />
-        ))}
+        {appointments &&
+          appointments.map((appointment) => (
+            <Appointment
+              key={appointment.id}
+              interviewers={availableInterviewers}
+              {...appointment}
+              handleCreateInterview={handleCreateInterview}
+              handleUpdateInterview={handleUpdateInterview}
+              handleDeleteInterview={handleDeleteInterview}
+              handleSpotPlus={handleSpotPlus}
+              handleSpotMinus={handleSpotMinus}
+            />
+          ))}
         <Appointment key="last" time="5pm" />
       </section>
     </main>
